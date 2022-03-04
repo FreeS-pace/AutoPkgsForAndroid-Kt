@@ -9,6 +9,7 @@ import java.io.File
  * com.wjr.auto_pkgs
  */
 data class BuildConfig(
+    var isPkgTest: Boolean = false,
     var nginxPath: String = "",
     var baseConfigPath: String = "",
     var isJiaGu: Boolean = false,

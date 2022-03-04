@@ -14,13 +14,15 @@ import com.ky.auto_pkg.utils.LogUtils
  */
 class UploadObjectProgressListener(private val mAppChannel: AppChannel) : ProgressListener {
     private var mBytesWritten: Long = 0L
-    private var mTotalBytes: Long = -1
+    private var mTotalBytes: Long = -1L
+    private var mProgress: Float = 0f
+    private val mMinNotifyGap = 5f
     private var mSucceed = false
 
     override fun progressChanged(progressEvent: ProgressEvent) {
         val bytes = progressEvent.bytes
         when (progressEvent.eventType) {
-            ProgressEventType.TRANSFER_PART_STARTED_EVENT ->
+            ProgressEventType.TRANSFER_STARTED_EVENT ->
                 LogUtils.d(
                     LogUtils.LOG_UPLOAD,
                     "任务：${mAppChannel.name} 开始上传：${mAppChannel.apkLocalAbsPath}"
@@ -29,17 +31,20 @@ class UploadObjectProgressListener(private val mAppChannel: AppChannel) : Progre
                 mTotalBytes = bytes
                 LogUtils.d(
                     LogUtils.LOG_UPLOAD,
-                    "任务：：${mAppChannel.name} 上传文件大小为：${(mTotalBytes * 1L / 1000 / 1024)}mb"
+                    "任务：：${mAppChannel.name} 上传文件大小为：${(mTotalBytes * 1F / 1024 / 1024)}mb"
                 )
             }
             ProgressEventType.REQUEST_BYTE_TRANSFER_EVENT -> {
                 mBytesWritten += bytes
                 if (mTotalBytes != -1L) {
-                    val percent = mBytesWritten * 100L / mTotalBytes
-                    LogUtils.d(
-                        LogUtils.LOG_UPLOAD,
-                        "任务：${mAppChannel.name} 已上传 -> $percent"
-                    )
+                    val percent = mBytesWritten * 100F / mTotalBytes
+                    if (percent == 0f || percent == 100f || mProgress - percent > mMinNotifyGap) {
+                        mProgress = percent
+                        LogUtils.d(
+                            LogUtils.LOG_UPLOAD,
+                            "任务：${mAppChannel.name} 已上传 -> ${mProgress}%"
+                        )
+                    }
                 } else {
                     LogUtils.d(
                         LogUtils.LOG_UPLOAD,
@@ -51,20 +56,16 @@ class UploadObjectProgressListener(private val mAppChannel: AppChannel) : Progre
                 mSucceed = true
                 LogUtils.d(
                     LogUtils.LOG_UPLOAD,
-                    "任务：${mAppChannel.name} 上传完成 -> 已上传大小：${mBytesWritten}字节，共需上传大小：${mTotalBytes}"
+                    "任务：${mAppChannel.name} 上传完成 -> 已上传大小：${mBytesWritten * 1F / 1024 / 1024}mb，" +
+                            "共需上传大小：${mTotalBytes * 1F / 1024 / 1024}mb"
                 )
             }
             ProgressEventType.TRANSFER_FAILED_EVENT ->
                 LogUtils.d(
                     LogUtils.LOG_UPLOAD,
-                    "任务：${mAppChannel.name} 上传失败，请查看失败原因 -> 已上传大小：${mBytesWritten}"
+                    "任务：${mAppChannel.name} 上传失败，请查看失败原因 -> 已上传大小：${mBytesWritten}字节"
                 )
-            else -> {
-                LogUtils.d(
-                    LogUtils.LOG_UPLOAD,
-                    "任务：${mAppChannel.name} 当前上传中发送的未知事件，请根据Type查看阿里云日志/源码..."
-                )
-            }
+            else -> {}
         }
     }
 }

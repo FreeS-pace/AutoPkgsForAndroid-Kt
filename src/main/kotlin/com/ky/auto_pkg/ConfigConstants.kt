@@ -28,7 +28,7 @@ object ConfigConstants {
     const val CONFIG_URL_NGINX_KEY = "URL_NGINX"
     const val CONFIG_API_KEY_PREFIX = "URL_"
     const val CONFIG_TOKEN_KEY_PREFIX = "TOKEN_"
-    const val CONFIG_FEISHU_URL_KEY = "FEISHU_BOT_HOOK_URL_TEST"
+    const val CONFIG_FEISHU_URL_KEY = "FEISHU_BOT_HOOK_URL"
     const val CONFIG_ASS_ENV_VALUE1 = "JTZW"
     const val CONFIG_ASS_ENV_VALUE2 = "JTZW_TEST"
     const val CONFIG_ASS_ENV_VALUE3 = "TW"

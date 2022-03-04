@@ -85,7 +85,7 @@ object FileUtils {
     ) {
         for (file in files) {
             val name = file.name
-            if (name.contains(keyStr) && (isJiaGu && !name.contains("_jiagu_sign"))) {
+            if (name.contains(keyStr) && (isJiaGu || !name.contains("_jiagu_sign"))) {
                 channel.apkLocalAbsPath = file.absolutePath
             }
         }

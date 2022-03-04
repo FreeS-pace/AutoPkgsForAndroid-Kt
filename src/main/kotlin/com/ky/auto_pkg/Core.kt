@@ -47,7 +47,8 @@ object Core {
             .retryOnConnectionFailure(true)
         Retrofit.Builder().baseUrl(ConfigConstants.API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.createSynchronous()).client(builder.build())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.createSynchronous())
+            .client(builder.build())
             .build().create(IAppService::class.java)
     }
     val THREAD_POOL = ThreadPoolExecutor(
@@ -106,23 +107,20 @@ object Core {
             EnvUtils.getServerName(properties.getProperty(buildConfig.serverEnvType))
         ConfigConstants.URL_NGINX_PREFIX =
             properties.getProperty(ConfigConstants.CONFIG_URL_NGINX_KEY)
-        // 发版模式
-//        ConfigConstants.API_BASE_URL = properties.getProperty(
-//            ConfigConstants.CONFIG_API_KEY_PREFIX
-//                    + buildConfig.serverEnvType.uppercase()
-//        )
-//        ConfigConstants.TOKEN = properties.getProperty(
-//            (ConfigConstants.CONFIG_TOKEN_KEY_PREFIX
-//                    + buildConfig.serverEnvType.uppercase())
-//        )
-        // test模式
         ConfigConstants.API_BASE_URL = properties.getProperty(
-            ConfigConstants.CONFIG_API_KEY_PREFIX + "DEV"
+            ConfigConstants.CONFIG_API_KEY_PREFIX
+                    + buildConfig.serverEnvType.uppercase()
         )
         ConfigConstants.TOKEN = properties.getProperty(
-            ConfigConstants.CONFIG_TOKEN_KEY_PREFIX + "DEV"
+            (ConfigConstants.CONFIG_TOKEN_KEY_PREFIX
+                    + buildConfig.serverEnvType.uppercase())
         )
+
+        // 是否为测试打包模式
+        val botKey = if (buildConfig.isPkgTest) ConfigConstants.CONFIG_FEISHU_URL_KEY + "_TEST"
+        else ConfigConstants.CONFIG_FEISHU_URL_KEY
+
         ConfigConstants.FEISHU_BOT_WEB_HOOK_URL =
-            properties.getProperty(ConfigConstants.CONFIG_FEISHU_URL_KEY)
+            properties.getProperty(botKey)
     }
 }

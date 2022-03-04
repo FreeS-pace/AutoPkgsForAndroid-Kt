@@ -1,7 +1,6 @@
 package com.ky.auto_pkg.missions
 
 import com.aliyun.oss.OSS
-import com.aliyun.oss.internal.OSSUtils
 import com.aliyun.oss.model.Callback
 import com.aliyun.oss.model.PutObjectRequest
 import com.ky.auto_pkg.ConfigConstants
@@ -58,11 +57,6 @@ class UploadMission(
                         + "\\\"size\\\":" + apkFile.length() + "}")
                 calbackBodyType = Callback.CalbackBodyType.JSON
             }
-
-            LogUtils.d(
-                LogUtils.LOG_UPLOAD,
-                "任务：" + mAppChannel.name + " 回调JsonBody2：" + OSSUtils.jsonizeCallback(request.callback)
-            )
 
             val responseMsg = mOssClient.putObject(request).response
             if (responseMsg.statusCode != 200) {

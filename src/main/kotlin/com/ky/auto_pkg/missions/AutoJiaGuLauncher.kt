@@ -50,7 +50,7 @@ class AutoJiaGuLauncher private constructor() {
         // 4.处理Apk
         handleApks()
 
-        LogUtils.d("", "=========================加固流程结束==========================\n\n")
+        LogUtils.d("", "\n\n=========================加固流程结束==========================\n\n")
     }
 
     @Throws(IOException::class)
@@ -109,7 +109,7 @@ class AutoJiaGuLauncher private constructor() {
             if (files.size != checkChannels.size + 2) {
                 throw Exception(
                     LogUtils.LOG_JIAGU_EXCEPTION
-                            + "加固多渠道后的Apk目录为空或文件数量不对："
+                            + "加固多渠道后的Apk目录为空或文件数量不对，请检查360加固是否有问题："
                             + checkChannels
                 )
             }
@@ -118,7 +118,7 @@ class AutoJiaGuLauncher private constructor() {
                 if (files.size != 2) {
                     throw Exception(
                         (LogUtils.LOG_JIAGU_EXCEPTION
-                                + "加固后的Apk数量 != 2：" + files.size)
+                                + "加固后的Apk数量 != 2，请检查360加固是否有问题：" + files.size)
                     )
                 }
             } else {
@@ -139,14 +139,14 @@ class AutoJiaGuLauncher private constructor() {
                 // 2.找到渠道对应的localAbsPath
                 FileUtils.setMultiChannelApkAbsPathByDir(apkFiles, mBuildConfig.checkChannels!!)
             } else {
-                // 2.找到加固对应的localAbsPath
+                // 2.找到已加固Release包对应的localAbsPath
                 FileUtils.setJiaGuApkAbsPathByDir(
                     apkFiles, mBuildConfig.checkChannels!!,
                     true
                 )
             }
         } else {
-            // 2.找到未加固对应的localAbsPath
+            // 2.找到未加固Release包对应的localAbsPath
             FileUtils.setJiaGuApkAbsPathByDir(apkFiles, mBuildConfig.checkChannels!!, false)
         }
 
@@ -206,7 +206,6 @@ class AutoJiaGuLauncher private constructor() {
                 }
                 process.destroy()
             }
-            // 删除文件
             // 删除文件
             LogUtils.d(LogUtils.LOG_JIAGU, "所有Apk已签名，删除文件规整中，处理完成...")
             for (file in unSignFiles) {

@@ -80,9 +80,9 @@ class AutoUploadLauncher private constructor() {
                 }
             })
         if (resultCode[0] != 1) {
-            throw Exception(LogUtils.LOG_UPLOAD_EXCEPTION + "请求Oss Token失败，请查看ConsoleLog")
+            throw Exception(LogUtils.LOG_UPLOAD_EXCEPTION + "请求Oss Token失败-------------------")
         }
-        LogUtils.d(LogUtils.LOG_UPLOAD, "获取OSS Token成功：$mStsToken")
+        LogUtils.d(LogUtils.LOG_UPLOAD, "获取OSS Token成功-------------------")
     }
 
     @Throws(Exception::class)
@@ -93,8 +93,6 @@ class AutoUploadLauncher private constructor() {
             missions.add(UploadMission(mOSSClient, mStsToken, channel, currUtcTime))
             currUtcTime += 2
         }
-
-        LogUtils.d(LogUtils.LOG_UPLOAD, "要上传的Apk渠道：${mBuildConfig.checkChannels}")
 
         mTasks = Core.THREAD_POOL.invokeAll(missions, 30, TimeUnit.MINUTES)
     }
@@ -127,7 +125,10 @@ class AutoUploadLauncher private constructor() {
      */
     @Throws(Exception::class)
     private fun sendResult2Server() {
-        LogUtils.d(LogUtils.LOG_UPLOAD, "==============上传结果==============")
+        LogUtils.d(
+            LogUtils.LOG_UPLOAD,
+            "\n\n=======================上传结果=======================\n\n"
+        )
 
         val uploadServerBody =
             UploadServerBody(mBuildConfig.appVersionCode, mBuildConfig.appVersionName).apply {
@@ -135,21 +136,16 @@ class AutoUploadLauncher private constructor() {
                 for (channel in mBuildConfig.checkChannels!!) {
                     if (channel.uploadResult != null) {
                         file_url!![channel.value!!] = channel.uploadResult!!.path!!
-                        LogUtils.d(
-                            LogUtils.LOG_UPLOAD,
-                            "========渠道：" + channel.name + " 上传成功，OssUrl："
-                                    + channel.uploadResult!!.path
-                        )
                     } else {
                         LogUtils.d(
                             LogUtils.LOG_UPLOAD_EXCEPTION,
-                            "========渠道：" + channel.name + " 上传失败"
+                            "\n========渠道：" + channel.name + " 上传失败"
                         )
                     }
                 }
             }
 
-        LogUtils.d(LogUtils.LOG_HTTP, "================准备上报Server：$uploadServerBody")
+        LogUtils.d(LogUtils.LOG_HTTP, "\n\n=========================准备上报Server：$uploadServerBody")
 
         val resultCode = intArrayOf(1)
         Core.APP_SERVICE.net_postUploadResult2Server(uploadServerBody)
@@ -173,7 +169,7 @@ class AutoUploadLauncher private constructor() {
                 }
             })
         if (resultCode[0] != 1) {
-            throw Exception("${LogUtils.LOG_UPLOAD_EXCEPTION}资源上报完成失败：请查看ConsoleLog：${uploadServerBody}")
+            throw Exception("${LogUtils.LOG_UPLOAD_EXCEPTION}资源上报失败：请查看ConsoleLog：${uploadServerBody}")
         }
     }
 }
