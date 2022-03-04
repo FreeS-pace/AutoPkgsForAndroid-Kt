@@ -43,7 +43,7 @@ task copyArchiv2Config {
                 return name != null && name.endsWith(".jar")
             }
         })[0]
-        def targetDir = file(System.getenv("ANDROID_CONFIG_PATH"))
+        def targetDir = new File(System.getenv("ANDROID_CONFIG_PATH"), archiveFile.name)
         Files.copy(archiveFile.toPath(), targetDir.toPath())
     }
 }
