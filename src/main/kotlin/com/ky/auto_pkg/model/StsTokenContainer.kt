@@ -6,10 +6,4 @@ package com.ky.auto_pkg.model
  * 11:13
  * com.ky.auto_pkg.model
  */
-class StsTokenContainer {
-    private var sts_token: StsToken? = null
-
-    override fun toString(): String {
-        return "StsTokenContainer(sts_token=$sts_token)"
-    }
-}
+class StsTokenContainer(var sts_token: StsToken? = null)

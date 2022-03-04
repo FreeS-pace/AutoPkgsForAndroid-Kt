@@ -21,12 +21,12 @@ interface IAppService {
     fun net_getOssToken(): Flowable<BaseResponse<StsTokenContainer>>
 
     @POST("api/ace/pack/android")
-    fun net_postUploadResult(
+    fun net_postUploadResult2Server(
         @Body body: UploadServerBody
-    ): Flowable<BaseResponse<StsTokenContainer>>
+    ): Flowable<BaseResponse<HashMap<String, String>>>
 
     @POST
-    fun net_postUploadResult(
+    fun net_postUploadResult2FeiShu(
         @Url url: String,
         @Body body: FeiShuObj
     ): Flowable<JsonObject>

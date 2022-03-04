@@ -6,10 +6,4 @@ package com.ky.auto_pkg.model
  * 11:22
  * com.ky.auto_pkg.model
  */
-class FeiShuContent {
-    private var text: String? = null
-
-    override fun toString(): String {
-        return "FeiShuContent(text=$text)"
-    }
-}
+data class FeiShuContent(var text: String? = null)
