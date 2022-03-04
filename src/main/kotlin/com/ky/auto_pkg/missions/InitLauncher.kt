@@ -31,8 +31,8 @@ class InitLauncher private constructor() {
 
     @Throws(Exception::class)
     fun generateBuildConfig(args: Array<String?>?): BuildConfig {
-        if (StringUtils.isEmpties(args) || args!!.size < 12) {
-            throw IllegalArgumentException("传入的参数数量不应该 < 12：${Arrays.toString(args)}")
+        if (StringUtils.isEmpties(args) || args!!.size < 11) {
+            throw IllegalArgumentException("传入的参数数量不应该 < 11：${Arrays.toString(args)}")
         }
         return BuildConfig().apply {
             /**
@@ -90,8 +90,7 @@ class InitLauncher private constructor() {
                 toString()
             }
             jiaGuJarPath = args[9]!!
-            jiagu360JavaPath = args[10]!!
-            isMultiChannel = args[11].toBoolean()
+            isMultiChannel = args[10].toBoolean()
 
             val keyStoreConfigPath =
                 baseConfigPath + File.separator + ConfigConstants.CONFIG_KEYSTORE_FILE_NAME
@@ -105,10 +104,10 @@ class InitLauncher private constructor() {
                     FileReader(baseConfigPath + File.separator + ConfigConstants.CONFIG_DEFAULT_CHANNEL_FILE_NAME),
                     type
                 )
-                if (args.size > 12 && args[12] != null) {
+                if (args.size > 11 && args[11] != null) {
                     isAllChannel = false
                     val checkChannel =
-                        args[10]!!.split(ConfigConstants.CONFIG_DEFAULT_CHANNEL_SPLIT_CHAR)
+                        args[11]!!.split(ConfigConstants.CONFIG_DEFAULT_CHANNEL_SPLIT_CHAR)
                     var index = 0
                     for (selChannelStr in checkChannel) {
                         while (index < channels.size) {

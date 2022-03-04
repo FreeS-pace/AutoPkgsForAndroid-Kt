@@ -37,7 +37,7 @@ class JiaGuMission(
         )
 
         val sb = StringBuilder()
-        sb.append(mBuildConfig.jiagu360JavaPath)
+        sb.append("java")
             .append(" -jar ")
             .append(mBuildConfig.jiaGuJarPath)
             .append(" -jiagu ")
