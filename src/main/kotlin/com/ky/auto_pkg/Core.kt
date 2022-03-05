@@ -18,6 +18,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 import java.util.*
@@ -94,10 +95,13 @@ object Core {
     @Throws(Exception::class)
     fun initConfigProperties(buildConfig: BuildConfig) {
         val properties = Properties()
+        val resourceAsStream = javaClass.getResourceAsStream(
+            "/" + ConfigConstants.CONFIG_URL_CONFIG_FILE_NAME
+        )
+        val testFile = File("/" + ConfigConstants.CONFIG_URL_CONFIG_FILE_NAME).absolutePath
+        println("测试结果：" + resourceAsStream + "，" + testFile)
         properties.load(
-            javaClass.getResourceAsStream(
-                "/" + ConfigConstants.CONFIG_URL_CONFIG_FILE_NAME
-            )
+            resourceAsStream
         )
 
         // build static params
