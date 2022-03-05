@@ -4,6 +4,7 @@ import com.ky.auto_pkg.ConfigConstants
 import com.ky.auto_pkg.Core
 import com.ky.auto_pkg.model.AppChannel
 import com.ky.auto_pkg.model.BuildConfig
+import com.ky.auto_pkg.model.JiaGu360Config
 import com.ky.auto_pkg.model.KeyStoreConfig
 import com.ky.auto_pkg.utils.FileUtils
 import com.ky.auto_pkg.utils.GsonUtils
@@ -96,6 +97,10 @@ class InitLauncher private constructor() {
                 baseConfigPath + File.separator + ConfigConstants.CONFIG_KEYSTORE_FILE_NAME
             keyStoreConfig =
                 Core.GSON.fromJson(FileReader(keyStoreConfigPath), KeyStoreConfig::class.java)
+            val jiaGu360ConfigPath =
+                baseConfigPath + File.separator + ConfigConstants.CONFIG_JIAGU_360_FILE_NAME
+            jiaGu360Config =
+                Core.GSON.fromJson(FileReader(jiaGu360ConfigPath), JiaGu360Config::class.java)
 
             val channels: MutableList<AppChannel>
             if (isJiaGu && isMultiChannel) {

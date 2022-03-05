@@ -24,6 +24,7 @@ data class BuildConfig(
     var jiagu360JavaPath: String = "",
     var isMultiChannel: Boolean = false,
     var keyStoreConfig: KeyStoreConfig? = null,
+    var jiaGu360Config: JiaGu360Config? = null,
     var appChannels: List<AppChannel>? = null,
     var checkChannels: List<AppChannel>? = null,
     var isAllChannel: Boolean = true,

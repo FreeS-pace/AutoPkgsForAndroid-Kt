@@ -12,6 +12,7 @@ import java.io.FileFilter
 import java.io.IOException
 import java.nio.file.Files
 import java.util.*
+import java.util.concurrent.Callable
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 import java.util.function.Consumer
@@ -67,9 +68,12 @@ class AutoJiaGuLauncher private constructor() {
         APK_SOURCE_FILE = files[0]
     }
 
+    /**
+     * todo：暂时以一个命令（1个线程）来处理 360加固保登录 && 加固，后续多模块可单另将登录及其他操作独立到单独Mission
+     */
     @Throws(InterruptedException::class)
     private fun startJiaGuMission() {
-        val missions = ArrayList<JiaGuMission>(1)
+        val missions = ArrayList<Callable<Int>>(1)
         missions.add(JiaGuMission(mBuildConfig, APK_SOURCE_FILE))
         mTasks = Core.THREAD_POOL.invokeAll(missions, 20, TimeUnit.MINUTES)
     }

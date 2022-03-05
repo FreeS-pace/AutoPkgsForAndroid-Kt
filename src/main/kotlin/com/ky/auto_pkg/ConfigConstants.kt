@@ -20,6 +20,7 @@ object ConfigConstants {
     const val CONFIG_ANDROID_GRADLE_FILE_NAME = "dependentConfig.gradle"
     const val CONFIG_KEYSTORE_FILE_NAME = "ace_android_key_config.json"
     const val CONFIG_DEFAULT_CHANNEL_FILE_NAME = "ace_app_channel_config.json"
+    const val CONFIG_JIAGU_360_FILE_NAME = "ace_jiagu_360_config.json"
     const val CONFIG_CUSTOM_CHANNEL_FILE_NAME = "ace_custom_channel.txt"
     const val CONFIG_DEFAULT_CHANNEL_PLATFORM = "UMENG_CHANNEL"
     const val CONFIG_DEFAULT_CHANNEL_SPLIT_CHAR = "&"
