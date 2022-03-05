@@ -32,7 +32,6 @@ jar {
     manifestContentCharset 'utf-8'
     metadataCharset 'utf-8'
     manifest.attributes.put("Main-Class", "com.ky.auto_pkg.LaunchKt")
-    from('resources')
     from(configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) })
 }
 
