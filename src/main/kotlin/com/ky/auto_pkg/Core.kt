@@ -95,7 +95,7 @@ object Core {
     @Throws(Exception::class)
     fun initConfigProperties(buildConfig: BuildConfig) {
         val properties = Properties()
-        val resourceAsStream = javaClass.getResourceAsStream(
+        val resourceAsStream = Core::class.java.getResourceAsStream(
             "/" + ConfigConstants.CONFIG_URL_CONFIG_FILE_NAME
         )
         val testFile = File("/" + ConfigConstants.CONFIG_URL_CONFIG_FILE_NAME).absolutePath
