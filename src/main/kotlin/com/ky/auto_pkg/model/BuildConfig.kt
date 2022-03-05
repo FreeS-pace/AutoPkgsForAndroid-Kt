@@ -21,7 +21,6 @@ data class BuildConfig(
     var serverEnvType: String = "",
     var sourcePath: String = "",
     var jiaGuJarPath: String = "",
-    var jiagu360JavaPath: String = "",
     var isMultiChannel: Boolean = false,
     var keyStoreConfig: KeyStoreConfig? = null,
     var jiaGu360Config: JiaGu360Config? = null,

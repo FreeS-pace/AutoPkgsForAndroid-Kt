@@ -37,7 +37,13 @@ class JiaGuMission(
         )
 
         val sb = StringBuilder()
-        sb.append("java")
+        sb.append("cd")
+            .append(" ")
+            .append(mBuildConfig.jiaGuJarPath.let {
+                it.substring(0, it.lastIndexOf(File.separator))
+            })
+            .append(" && ")
+            .append("java")
             .append(" -jar ")
             .append(mBuildConfig.jiaGuJarPath)
             .append(" -login ")
