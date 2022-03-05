@@ -103,7 +103,7 @@ class AutoJiaGuLauncher private constructor() {
         if (!apkDirFile.exists()
             || apkDirFile.listFiles() == null
         ) {
-            throw IOException(LogUtils.LOG_JIAGU_EXCEPTION + "Apk目录有误或为空！")
+            throw IOException(LogUtils.LOG_JIAGU_EXCEPTION + "Apk目录有误或为空：${apkDirFile.absolutePath}")
         }
 
         val files = apkDirFile.listFiles()!!
