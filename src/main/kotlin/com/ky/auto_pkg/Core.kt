@@ -75,11 +75,11 @@ object Core {
     }
 
     /**
-     * 根据命令构建指定
+     * 根据命令构建指定：目前平台为MacOs
      */
     @Throws(Exception::class)
     fun buildProcess(command: String): Process {
-        val process = Runtime.getRuntime().exec(command)
+        val process = Runtime.getRuntime().exec(arrayOf("/bin/bash", "-c", command))
 
         val buildLogBr =
             BufferedReader(InputStreamReader(process.inputStream, StandardCharsets.UTF_8))
