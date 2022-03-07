@@ -38,7 +38,7 @@ class UploadObjectProgressListener(private val mAppChannel: AppChannel) : Progre
                 mBytesWritten += bytes
                 if (mTotalBytes != -1L) {
                     val percent = mBytesWritten * 100F / mTotalBytes
-                    if (percent == 0f || percent == 100f || mProgress - percent > mMinNotifyGap) {
+                    if (percent == 0f || percent == 100f || percent - mProgress > mMinNotifyGap) {
                         mProgress = percent
                         LogUtils.d(
                             LogUtils.LOG_UPLOAD,
