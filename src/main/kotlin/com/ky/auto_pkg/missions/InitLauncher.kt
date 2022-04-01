@@ -55,6 +55,7 @@ class InitLauncher private constructor() {
             /**
              * 读取配置文件：版本号、版本名称
              */
+            println("TestBug==============：" + outputPath)
             val reader = BufferedReader(
                 FileReader(
                     File(
