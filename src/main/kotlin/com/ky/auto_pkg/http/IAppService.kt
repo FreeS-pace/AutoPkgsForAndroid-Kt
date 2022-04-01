@@ -50,6 +50,6 @@ interface IAppService {
     @POST
     fun <T> net_postSimpleMsg2FeiShu(
         @Url url: String,
-        @Body body: FeiShuObj<T>
+        @Body body: FeiShuObj<@JvmSuppressWildcards T>
     ): Flowable<JsonObject>
 }
