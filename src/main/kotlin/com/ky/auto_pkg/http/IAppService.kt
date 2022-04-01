@@ -48,8 +48,8 @@ interface IAppService {
      * 发送简易消息至飞书
      */
     @POST
-    fun <T> net_postSimpleMsg2FeiShu(
+    fun net_postSimpleMsg2FeiShu(
         @Url url: String,
-        @Body body: FeiShuObj<@JvmSuppressWildcards T>
+        @Body body: FeiShuObj<@JvmSuppressWildcards Any>
     ): Flowable<JsonObject>
 }
