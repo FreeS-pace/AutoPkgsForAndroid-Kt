@@ -37,7 +37,7 @@ class AutoPostFirAndMsgLauncher private constructor() {
         LogUtils.d("", "=====================开始发送消息至飞书Bot流程======================")
 
         mBuildConfig = buildConfig
-        if (buildConfig.isNotifyGroup) {
+        if (mBuildConfig.isNotifyGroup) {
             buildGroupMsg()
         } else {
             sendSimpleMsg()
