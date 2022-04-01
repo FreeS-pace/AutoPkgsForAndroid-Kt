@@ -10,5 +10,6 @@ data class BaseResponse<T>(
     var code: Int = 0,
     var error: String? = null,
     var data: T? = null,
+    var msg: String? = null,
     var timestamp: Long = 0
 )

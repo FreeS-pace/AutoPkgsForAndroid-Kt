@@ -11,6 +11,9 @@ object ConfigConstants {
     lateinit var ENV_SERVER_SERVER_NAME: String
     lateinit var URL_NGINX_PREFIX: String
     lateinit var API_BASE_URL: String
+    lateinit var FIR_TOKEN: String
+    lateinit var FEISHU_TENANT_APP_ID: String
+    lateinit var FEISHU_TENANT_APP_SECRET: String
 
     lateinit var TOKEN: String
     lateinit var FEISHU_BOT_WEB_HOOK_URL: String
@@ -36,6 +39,9 @@ object ConfigConstants {
     const val CONFIG_SERVER_ENV_VALUE1 = "CSF"
     const val CONFIG_SERVER_ENV_VALUE2 = "KFF"
     const val CONFIG_SERVER_ENV_VALUE3 = "XSF"
+    const val CONFIG_FIR_TOKEN_KEY = "FIR_TOKEN"
+    const val CONFIG_FEISHU_APP_ID_KEY = "FEISHU_TENANT_APP_ID"
+    const val CONFIG_FEISHU_APP_SECRET_KEY = "FEISHU_TENANT_APP_SECRET"
 
     // Oss Remote 远程地址
     const val RES_UPLOAD_PATH_APK = "app/release/android/"

@@ -6,7 +6,7 @@ package com.ky.auto_pkg.model
  * 11:23
  * com.ky.auto_pkg.model
  */
-data class FeiShuObj(
+data class FeiShuObj<T>(
     var msg_type: String,
-    var content: FeiShuContent
+    var content: T
 )

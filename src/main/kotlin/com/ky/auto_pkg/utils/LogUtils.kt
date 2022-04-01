@@ -16,6 +16,8 @@ object LogUtils {
     const val LOG_FEISHU_EXCEPTION = "FeiShuException："
     const val LOG_CP = "CopyApk："
     const val LOG_CP_EXCEPTION = "CopyApkException："
+    const val LOG_FIR = "FirLog："
+    const val LOG_FIR_EXCEPTION = "FirException："
 
     @JvmStatic
     fun d(tag: String, msg: String) {

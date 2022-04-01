@@ -91,6 +91,14 @@ object FileUtils {
         }
     }
 
+    fun findSourceApkPath(path: String, suffix: String): File {
+        return File(path)
+            .listFiles()!!
+            .filter {
+                it.name.endsWith(suffix)
+            }[0]
+    }
+
     /**
      * 获取选中的渠道
      */

@@ -70,17 +70,6 @@ class JiaGuMission(
         }
         val command = sb.toString()
         LogUtils.d(LogUtils.LOG_JIAGU, "加固命令：$command")
-        val process: Process = Core.buildProcess(command)
-
-        // 阻塞直至完成
-        val result = process.waitFor()
-        if (result != 0) {
-            // 说明没有执行成功
-            process.destroy()
-            throw Exception(LogUtils.LOG_JIAGU_EXCEPTION + "执行加固异常：" + result)
-        }
-        LogUtils.d(LogUtils.LOG_JIAGU, "任务：" + mApkFile.name + " 执行结果：成功")
-
-        process.destroy()
+        Core.syncExecProcess(command, "加固成功", "执行加固异常")
     }
 }
