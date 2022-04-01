@@ -99,6 +99,8 @@ class AutoPostFirAndMsgLauncher private constructor() {
                 // part3
                 val part3Data = ArrayList<IPartItemData>()
                 part3Data.add(PartTextObj(buildFeiShuChannelObj(StringBuilder()).toString()))
+                postObj.addPartData(part3Data)
+                println("最终发送：=============：" + postObj)
                 // request
                 Core.APP_SERVICE.net_postSimpleMsg2FeiShu(
                     ConfigConstants.FEISHU_BOT_WEB_HOOK_URL,
