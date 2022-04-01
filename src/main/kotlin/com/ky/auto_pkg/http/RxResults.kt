@@ -26,7 +26,7 @@ object RxResults {
     fun handleFeishuResult(): FlowableTransformer<FeishuResponse, String> {
         return FlowableTransformer { upstream ->
             upstream.flatMap {
-                if (it.code == 200) {
+                if (it.code == 0) {
                     // 返回正常数据
                     createFbData(it.tenant_access_token)
                 } else {
