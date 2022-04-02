@@ -77,7 +77,7 @@ class AutoPostFirAndMsgLauncher private constructor() {
                         it.name.endsWith(".png")
                     }[0]
                 val imgBody: RequestBody =
-                    imgFile.asRequestBody("image/*".toMediaTypeOrNull())
+                    imgFile.asRequestBody("multipart/form-data".toMediaTypeOrNull())
                 val requestBody = MultipartBody.Builder()
                     .addFormDataPart("image_type", "message")
                     .addFormDataPart("image", imgFile.name, imgBody)
