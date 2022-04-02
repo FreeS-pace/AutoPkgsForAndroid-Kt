@@ -42,7 +42,7 @@ interface IAppService {
     fun net_uploadImg2FeishuServer(
         @Header("Authorization") token: String,
         @Body body: RequestBody
-    ): Flowable<BaseResponse<UploadImgFeishuResult>>
+    ): Flowable<UploadImgResponse>
 
     /**
      * 发送简易消息至飞书

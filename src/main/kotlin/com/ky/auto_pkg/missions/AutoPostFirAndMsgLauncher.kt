@@ -84,7 +84,7 @@ class AutoPostFirAndMsgLauncher private constructor() {
                     .build()
                 Core.APP_SERVICE.net_uploadImg2FeishuServer("Bearer $token", requestBody)
             }
-            .compose(RxResults.handleNewResult())
+            .compose(RxResults.handleFeishuUploadimgResult())
             .flatMap {
                 // 构建Group消息
                 val postObj = FeiShuPostObj()
@@ -95,7 +95,7 @@ class AutoPostFirAndMsgLauncher private constructor() {
                 part1Data.add(PartTextObj(buildPrefixMsg().toString()))
                 postObj.addPartData(part1Data)
                 // part2
-                postObj.addPartData(buildQRCodeMsg(it.image_key!!))
+                postObj.addPartData(buildQRCodeMsg(it))
                 // part3
                 val part3Data = ArrayList<IPartItemData>()
                 part3Data.add(PartTextObj(buildFeiShuChannelObj(StringBuilder()).toString()))

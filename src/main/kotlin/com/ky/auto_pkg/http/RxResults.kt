@@ -1,6 +1,7 @@
 package com.ky.auto_pkg.http
 
 import com.ky.auto_pkg.model.FeishuResponse
+import com.ky.auto_pkg.model.UploadImgResponse
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableTransformer
@@ -29,6 +30,19 @@ object RxResults {
                 if (it.code == 0) {
                     // 返回正常数据
                     createFbData(it.tenant_access_token)
+                } else {
+                    Flowable.error(Exception(it.msg))
+                }
+            }
+        }
+    }
+
+    fun handleFeishuUploadimgResult(): FlowableTransformer<UploadImgResponse, String> {
+        return FlowableTransformer { upstream ->
+            upstream.flatMap {
+                if (it.code == 0) {
+                    // 返回正常数据
+                    createFbData(it.data.image_key)
                 } else {
                     Flowable.error(Exception(it.msg))
                 }
