@@ -82,7 +82,9 @@ class AutoPostFirAndMsgLauncher private constructor() {
                     .addFormDataPart("image_type", "message")
                     .addFormDataPart("image", imgFile.name, imgBody)
                     .build()
-                Core.APP_SERVICE.net_uploadImg2FeishuServer("Bearer $token", requestBody)
+                Core.APP_SERVICE.net_uploadImg2FeishuServer("Bearer $token",
+                    "multipart/form-data; boundary=00339488-bfc1-41d7-9b2e-f6548d3a6977",
+                    requestBody)
             }
             .compose(RxResults.handleFeishuUploadimgResult())
             .flatMap {

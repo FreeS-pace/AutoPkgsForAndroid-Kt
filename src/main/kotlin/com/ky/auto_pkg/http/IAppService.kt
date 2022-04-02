@@ -39,9 +39,9 @@ interface IAppService {
      * 上传图片至飞书
      */
     @POST("https://open.feishu.cn/open-apis/image/v4/put/")
-    @HEAD("multipart/form-data; boundary=00339488-bfc1-41d7-9b2e-f6548d3a6977")
     fun net_uploadImg2FeishuServer(
         @Header("Authorization") token: String,
+        @Header("Content-Type") type: String,
         @Body body: RequestBody
     ): Flowable<UploadImgResponse>
 
