@@ -114,15 +114,12 @@ class InitLauncher private constructor() {
                     isAllChannel = false
                     val checkChannel =
                         args[12]!!.split(ConfigConstants.CONFIG_DEFAULT_CHANNEL_SPLIT_CHAR)
-                    var index = 0
                     for (selChannelStr in checkChannel) {
-                        while (index < channels.size) {
-                            val channel = channels[index]
+                        for (channel in channels) {
                             if (channel.name.equals(selChannelStr)) {
-                                index++
+                                channel.isCheck = true
                                 break
                             }
-                            index++
                         }
                     }
                     // 写入自定义模版
