@@ -22,7 +22,6 @@ class BeanTypeDeserializer : JsonDeserializer<BaseResponse<Any>> {
         return try {
             val jObj = json.asJsonObject
             val resultCode = jObj["code"].asInt
-            val msg = jObj["msg"].asString
             val timeStamp = jObj["timestamp"].asLong
             var errMsg: String? = null
             if (jObj["error"] != JsonNull.INSTANCE && jObj["error"] != null) {
@@ -33,14 +32,14 @@ class BeanTypeDeserializer : JsonDeserializer<BaseResponse<Any>> {
                     resultCode, errMsg, context.deserialize(
                         jObj["data"],
                         (typeOfT as ParameterizedType).actualTypeArguments[0]
-                    ), msg, timeStamp
+                    ), timeStamp
                 )
             } else {
-                BaseResponse(resultCode, errMsg, Any(), msg, timeStamp)
+                BaseResponse(resultCode, errMsg, Any(), timeStamp)
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            BaseResponse(600, "数据序列化错误：" + e.message, Any(), null, 0)
+            BaseResponse(600, "数据序列化错误：" + e.message, Any(), 0)
         }
     }
 

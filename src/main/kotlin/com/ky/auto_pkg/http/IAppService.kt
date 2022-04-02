@@ -4,7 +4,6 @@ import com.google.gson.JsonObject
 import com.ky.auto_pkg.model.*
 import io.reactivex.rxjava3.core.Flowable
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.http.*
 
 /**
@@ -42,14 +41,6 @@ interface IAppService {
     @POST("https://open.feishu.cn/open-apis/image/v4/put/")
     @Multipart
     fun net_uploadImg2FeishuServer(
-        @Header("Authorization") token: String,
-        @Part type: MultipartBody.Part,
-        @Part imgFile: MultipartBody.Part
-    ): Flowable<UploadImgResponse>
-
-    @POST("https://open.feishu.cn/open-apis/image/v4/put/")
-    @Multipart
-    fun net_test(
         @Header("Authorization") token: String,
         @Part type: MultipartBody.Part,
         @Part imgFile: MultipartBody.Part
