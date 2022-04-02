@@ -37,8 +37,8 @@ class PartTextObj(
 
 data class PartImgObj(
     val image_key: String,
-    var width: Int? = 100,
-    var height: Int? = 100
+    var width: Int? = 200,
+    var height: Int? = 200
 ) : IPartItemData {
     val tag: String = "img"
 }
