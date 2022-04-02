@@ -40,6 +40,7 @@ interface IAppService {
      * 上传图片至飞书
      */
     @POST("https://open.feishu.cn/open-apis/image/v4/put/")
+    @Multipart
     fun net_uploadImg2FeishuServer(
         @Header("Authorization") token: String,
         @Part type: MultipartBody.Part,
