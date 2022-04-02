@@ -78,13 +78,13 @@ class AutoPostFirAndMsgLauncher private constructor() {
                     }[0]
                 val imgBody: RequestBody =
                     imgFile.asRequestBody("image/png".toMediaTypeOrNull())
-                val requestBody = MultipartBody.Builder()
-                    .addFormDataPart("image_type", "message")
-                    .addFormDataPart("image", imgFile.name, imgBody)
-                    .build()
-                Core.APP_SERVICE.net_uploadImg2FeishuServer("Bearer $token",
-                    "multipart/form-data; boundary=00339488-bfc1-41d7-9b2e-f6548d3a6977",
-                    requestBody)
+                val imgPart = MultipartBody.Part.createFormData("image", imgFile.name, imgBody)
+                var textPart = MultipartBody.Part.createFormData("image_type", "message")
+                Core.APP_SERVICE.net_uploadImg2FeishuServer(
+                    "Bearer $token",
+                    textPart,
+                    imgPart
+                )
             }
             .compose(RxResults.handleFeishuUploadimgResult())
             .flatMap {
