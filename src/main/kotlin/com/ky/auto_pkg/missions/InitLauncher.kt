@@ -32,8 +32,8 @@ class InitLauncher private constructor() {
 
     @Throws(Exception::class)
     fun generateBuildConfig(args: Array<String?>?): BuildConfig {
-        if (StringUtils.isEmpties(args) || args!!.size < 11) {
-            throw IllegalArgumentException("传入的参数数量不应该 < 11：${Arrays.toString(args)}")
+        if (StringUtils.isEmpties(args) || args!!.size < 12) {
+            throw IllegalArgumentException("传入的参数数量不应该 < 12：${Arrays.toString(args)}")
         }
         return BuildConfig().apply {
             /**
@@ -51,7 +51,7 @@ class InitLauncher private constructor() {
             val serverEnvType = if (isPkgTest) "test" else args[9]!!
             this.assembleType = assembleType
             this.serverEnvType = serverEnvType
-            feishuBot = args[10].toString()
+            feishuBot = args[12].toString()
 
             /**
              * 读取配置文件：版本号、版本名称
@@ -111,10 +111,10 @@ class InitLauncher private constructor() {
                     FileReader(baseConfigPath + File.separator + ConfigConstants.CONFIG_DEFAULT_CHANNEL_FILE_NAME),
                     type
                 )
-                if (args.size > 12 && args[12] != null) {
+                if (args.size > 13 && args[13] != null) {
                     isAllChannel = false
                     val checkChannel =
-                        args[12]!!.split(ConfigConstants.CONFIG_DEFAULT_CHANNEL_SPLIT_CHAR)
+                        args[13]!!.split(ConfigConstants.CONFIG_DEFAULT_CHANNEL_SPLIT_CHAR)
                     for (selChannelStr in checkChannel) {
                         for (channel in channels) {
                             if (channel.name.equals(selChannelStr)) {
