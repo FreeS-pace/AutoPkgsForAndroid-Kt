@@ -12,6 +12,7 @@ import com.ky.auto_pkg.model.BuildConfig
 import com.ky.auto_pkg.model.StsToken
 import com.ky.auto_pkg.utils.EnvUtils
 import com.ky.auto_pkg.utils.FileUtils
+import com.ky.auto_pkg.utils.LogUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -78,7 +79,7 @@ object Core {
      * 根据命令构建指定：目前平台为MacOs
      */
     @Throws(Exception::class)
-    fun buildProcess(command: String): Process {
+    fun syncExecProcess(command: String, successLog: String, failLog: String) {
         val process = Runtime.getRuntime().exec(arrayOf("/bin/bash", "-c", command))
 
         val buildLogBr =
@@ -88,7 +89,15 @@ object Core {
         FileUtils.writeAsyncContent(buildLogBr)
         FileUtils.writeAsyncContent(errLogBr)
 
-        return process
+        // 阻塞直至完成
+        val result = process.waitFor()
+        if (result != 0) {
+            // 说明没有执行成功
+            process.destroy()
+            throw Exception("${failLog}：" + result)
+        }
+        LogUtils.d("任务：", successLog)
+        process.destroy()
     }
 
     @Throws(Exception::class)
@@ -117,10 +126,17 @@ object Core {
         )
 
         // 是否为测试打包模式
-        val botKey = if (buildConfig.isPkgTest) ConfigConstants.CONFIG_FEISHU_URL_KEY + "_TEST"
-        else ConfigConstants.CONFIG_FEISHU_URL_KEY
+        val botKey =
+            if (buildConfig.isPkgTest || !buildConfig.isNotifyGroup) ConfigConstants.CONFIG_FEISHU_URL_KEY + "_TEST"
+            else ConfigConstants.CONFIG_FEISHU_URL_KEY + buildConfig.feishuBot
 
         ConfigConstants.FEISHU_BOT_WEB_HOOK_URL =
             properties.getProperty(botKey)
+
+        ConfigConstants.FIR_TOKEN = properties.getProperty(ConfigConstants.CONFIG_FIR_TOKEN_KEY)
+        ConfigConstants.FEISHU_TENANT_APP_ID =
+            properties.getProperty(ConfigConstants.CONFIG_FEISHU_APP_ID_KEY)
+        ConfigConstants.FEISHU_TENANT_APP_SECRET =
+            properties.getProperty(ConfigConstants.CONFIG_FEISHU_APP_SECRET_KEY)
     }
 }

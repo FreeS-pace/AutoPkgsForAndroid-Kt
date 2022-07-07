@@ -2,6 +2,7 @@ package com.ky.auto_pkg.missions
 
 import com.ky.auto_pkg.Core
 import com.ky.auto_pkg.model.BuildConfig
+import com.ky.auto_pkg.utils.FileUtils
 import com.ky.auto_pkg.utils.LogUtils
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Future
@@ -29,23 +30,30 @@ class AutoOrmNginxLauncher private constructor() {
         LogUtils.d("", "\n\n=====================开始复制APK至Nginx路径流程======================")
 
         mBuildConfig = buildConfig
-        if (!(mBuildConfig.isJiaGu && mBuildConfig.isMultiChannel && mBuildConfig.isSend2Server)) {
-            // 1.创建拷贝任务
-            startCpMissions()
-            // 2.wait result
-            waitResult()
-        }
+        // 生成多渠道包的，需要
+        startCpMissions()
+        // 2.wait result
+        waitResult()
 
         LogUtils.d("", "\n\n=====================复制APK至Nginx结束======================")
     }
 
     @Throws(Exception::class)
     private fun startCpMissions() {
-        val missions = ArrayList<CpFileMission>(mBuildConfig.checkChannels!!.size)
-        for (channel in mBuildConfig.checkChannels!!) {
-            missions.add(CpFileMission(channel, mBuildConfig.nginxPath))
+        val missions = ArrayList<CpFileMission>(2)
+
+        val targetName: String
+        val apkSourceFile = if (mBuildConfig.isJiaGu) {
+            targetName = "ace_release_jiagu.apk"
+            FileUtils.findSourceApkPath(mBuildConfig.sourcePath, "_jiagu_sign.apk")
+        } else {
+            targetName = "ace_release.apk"
+            FileUtils.findSourceApkPath(mBuildConfig.sourcePath, "-release.apk")
         }
-        mTasks = Core.THREAD_POOL.invokeAll(missions, 20, TimeUnit.MINUTES)
+        missions.add(CpFileMission(apkSourceFile, mBuildConfig.nginxPath, targetName))
+        val mappingSourceFile = FileUtils.findSourceApkPath(mBuildConfig.sourcePath, "mapping.txt")
+        missions.add(CpFileMission(mappingSourceFile, mBuildConfig.nginxPath, "mapping.txt"))
+        mTasks = Core.THREAD_POOL.invokeAll(missions, 1, TimeUnit.MINUTES)
     }
 
     @Throws(Exception::class)
@@ -65,7 +73,7 @@ class AutoOrmNginxLauncher private constructor() {
             }
         }
         if (resultCode[0] != -1) {
-            LogUtils.d(LogUtils.LOG_CP, "所有Apk复制至Nginx完成：${resultCode[0]}")
+            LogUtils.d(LogUtils.LOG_CP, "复制至Nginx完成：${resultCode[0]}")
         } else {
             throw Exception("${LogUtils.LOG_CP_EXCEPTION}复制至Nginx出错：${resultCode[0]}")
         }

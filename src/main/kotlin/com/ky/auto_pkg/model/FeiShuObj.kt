@@ -8,5 +8,5 @@ package com.ky.auto_pkg.model
  */
 data class FeiShuObj(
     var msg_type: String,
-    var content: FeiShuContent
+    var content: FeiShuPostObj
 )

@@ -39,17 +39,19 @@ class InitLauncher private constructor() {
             /**
              * 路径初始化
              */
-            isPkgTest = "${args[0]}".toBoolean()
-            nginxPath = "${args[1]}${File.separator}${System.getenv("JOB_NAME")}"
-            baseConfigPath = args[2]!!
-            isJiaGu = args[3].toBoolean()
-            isSend2Server = args[4].toBoolean()
-            val outputPath = args[5]
-            val branchTag = args[6]
-            val assembleType = args[7]!!
-            val serverEnvType = if (isPkgTest) "test" else args[8]!!
+            isNotifyGroup = "${args[0]}".toBoolean()
+            isPkgTest = "${args[1]}".toBoolean()
+            nginxPath = "${args[2]}${File.separator}${System.getenv("JOB_NAME")}"
+            baseConfigPath = args[3]!!
+            isJiaGu = args[4].toBoolean()
+            isSend2Server = args[5].toBoolean()
+            val outputPath = args[6]
+            val branchTag = args[7]
+            val assembleType = args[8]!!
+            val serverEnvType = if (isPkgTest) "test" else args[9]!!
             this.assembleType = assembleType
             this.serverEnvType = serverEnvType
+            feishuBot = args[10].toString()
 
             /**
              * 读取配置文件：版本号、版本名称
@@ -90,8 +92,8 @@ class InitLauncher private constructor() {
                 append(assembleType).append("/").append(serverEnvType)
                 toString()
             }
-            jiaGuJarPath = args[9]!!
-            isMultiChannel = args[10].toBoolean()
+            jiaGuJarPath = args[10]!!
+            isMultiChannel = args[11].toBoolean()
 
             val keyStoreConfigPath =
                 baseConfigPath + File.separator + ConfigConstants.CONFIG_KEYSTORE_FILE_NAME
@@ -109,19 +111,16 @@ class InitLauncher private constructor() {
                     FileReader(baseConfigPath + File.separator + ConfigConstants.CONFIG_DEFAULT_CHANNEL_FILE_NAME),
                     type
                 )
-                if (args.size > 11 && args[11] != null) {
+                if (args.size > 12 && args[12] != null) {
                     isAllChannel = false
                     val checkChannel =
-                        args[11]!!.split(ConfigConstants.CONFIG_DEFAULT_CHANNEL_SPLIT_CHAR)
-                    var index = 0
+                        args[12]!!.split(ConfigConstants.CONFIG_DEFAULT_CHANNEL_SPLIT_CHAR)
                     for (selChannelStr in checkChannel) {
-                        while (index < channels.size) {
-                            val channel = channels[index]
+                        for (channel in channels) {
                             if (channel.name.equals(selChannelStr)) {
-                                index++
+                                channel.isCheck = true
                                 break
                             }
-                            index++
                         }
                     }
                     // 写入自定义模版

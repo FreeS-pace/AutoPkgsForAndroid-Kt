@@ -20,22 +20,22 @@ class BeanTypeDeserializer : JsonDeserializer<BaseResponse<Any>> {
         context: JsonDeserializationContext
     ): BaseResponse<Any> {
         return try {
-            var jObj = json.asJsonObject
-            var resultCode = jObj["code"].asInt
-            var timeStamp = jObj["timestamp"].asLong
-            var msg: String? = null
+            val jObj = json.asJsonObject
+            val resultCode = jObj["code"].asInt
+            val timeStamp = jObj["timestamp"].asLong
+            var errMsg: String? = null
             if (jObj["error"] != JsonNull.INSTANCE && jObj["error"] != null) {
-                msg = jObj["error"].asString
+                errMsg = jObj["error"].asString
             }
             if (resultCode == 200) {
                 BaseResponse(
-                    resultCode, msg, context.deserialize(
+                    resultCode, errMsg, context.deserialize(
                         jObj["data"],
                         (typeOfT as ParameterizedType).actualTypeArguments[0]
                     ), timeStamp
                 )
             } else {
-                BaseResponse(resultCode, msg, Any(), timeStamp)
+                BaseResponse(resultCode, errMsg, Any(), timeStamp)
             }
         } catch (e: Exception) {
             e.printStackTrace()

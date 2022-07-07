@@ -9,6 +9,7 @@ import java.io.File
  * com.wjr.auto_pkgs
  */
 data class BuildConfig(
+    var isNotifyGroup: Boolean = true,
     var isPkgTest: Boolean = false,
     var nginxPath: String = "",
     var baseConfigPath: String = "",
@@ -27,5 +28,6 @@ data class BuildConfig(
     var appChannels: List<AppChannel>? = null,
     var checkChannels: List<AppChannel>? = null,
     var isAllChannel: Boolean = true,
-    var customChannelFile: File? = null
+    var customChannelFile: File? = null,
+    var feishuBot: String = "0bf5558e-b3e4-48c0-bd5e-15d1ad38f035"
 )

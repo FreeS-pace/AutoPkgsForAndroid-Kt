@@ -42,8 +42,8 @@ fun main(args: Array<String?>?) {
         // 7.将文件拷贝至Nginx目录下
         AutoOrmNginxLauncher.instance.ormNginxProxy(buildConfig)
 
-        // 8.通知飞书
-        AutoSendPkgMsgLauncher.instance.autoSendPkgMsg(buildConfig)
+        // 8.上传Fir并且通知飞书
+        AutoPostFirAndMsgLauncher.instance.autoSendPkgMsg(buildConfig)
     } catch (e: Exception) {
         e.printStackTrace()
         result = -1

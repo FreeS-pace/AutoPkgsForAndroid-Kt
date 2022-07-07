@@ -110,7 +110,7 @@ class AutoJiaGuLauncher private constructor() {
         val checkChannels: List<AppChannel> = mBuildConfig.checkChannels!!
 
         if (mBuildConfig.isJiaGu && mBuildConfig.isMultiChannel) {
-            if (files.size != checkChannels.size + 2) {
+            if (files.size != checkChannels.size + 3) {
                 throw Exception(
                     LogUtils.LOG_JIAGU_EXCEPTION
                             + "加固多渠道后的Apk目录为空或文件数量不对，请检查360加固是否有问题："
@@ -119,17 +119,17 @@ class AutoJiaGuLauncher private constructor() {
             }
         } else {
             if (mBuildConfig.isJiaGu) {
-                if (files.size != 2) {
+                if (files.size != 3) {
                     throw Exception(
                         (LogUtils.LOG_JIAGU_EXCEPTION
-                                + "加固后的Apk数量 != 2，请检查360加固是否有问题：" + files.size)
+                                + "加固后的Apk+Mapping数量 != 3，请检查360加固是否有问题：" + files.size)
                     )
                 }
             } else {
-                if (files.size != 1) {
+                if (files.size != 2) {
                     throw Exception(
                         (LogUtils.LOG_JIAGU_EXCEPTION
-                                + "未加固的Apk数量 != 1：" + files.size)
+                                + "未加固的Apk+Mapping数量 != 2：" + files.size)
                     )
                 }
             }
@@ -199,16 +199,7 @@ class AutoJiaGuLauncher private constructor() {
                 )
             })
             for (command in commands) {
-                val process: Process = Core.buildProcess(command)
-
-                // 阻塞直至完成
-                val result = process.waitFor()
-                if (result != 0) {
-                    // 说明没有执行成功
-                    process.destroy()
-                    throw Exception(LogUtils.LOG_JIAGU + "执行签名异常，程序退出：" + result)
-                }
-                process.destroy()
+                Core.syncExecProcess(command, "签名成功", "执行签名异常，程序退出")
             }
             // 删除文件
             LogUtils.d(LogUtils.LOG_JIAGU, "所有Apk已签名，删除文件规整中，处理完成...")
