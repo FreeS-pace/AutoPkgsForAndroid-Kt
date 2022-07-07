@@ -51,6 +51,7 @@ class InitLauncher private constructor() {
             val serverEnvType = if (isPkgTest) "test" else args[9]!!
             this.assembleType = assembleType
             this.serverEnvType = serverEnvType
+            feishuBot = args[10].toString()
 
             /**
              * 读取配置文件：版本号、版本名称
