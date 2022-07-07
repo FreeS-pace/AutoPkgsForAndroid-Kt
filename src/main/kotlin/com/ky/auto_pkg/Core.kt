@@ -128,7 +128,7 @@ object Core {
         // 是否为测试打包模式
         val botKey =
             if (buildConfig.isPkgTest || !buildConfig.isNotifyGroup) ConfigConstants.CONFIG_FEISHU_URL_KEY + "_TEST"
-            else ConfigConstants.CONFIG_FEISHU_URL_KEY
+            else ConfigConstants.CONFIG_FEISHU_URL_KEY + buildConfig.feishuBot
 
         ConfigConstants.FEISHU_BOT_WEB_HOOK_URL =
             properties.getProperty(botKey)
